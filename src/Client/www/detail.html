@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="ja-JP">
+  <head>
+    <meta charset="UTF-8">
+<!--
+   ！注意！ このHTMLはPHPを利用して生成されています。
+   HTMLファイルを直接編集しないでください。
+-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <link rel="stylesheet" href="css/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/detail.css" />
+    <script type="text/javascript" src="js/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/detail.js"></script>
+    <title>TGI2:詳細設定</title>
+  </head><body>
+    <div class="heading">
+      <table class="heading">
+        <tr><td class="col-xs-4"><a href="index.html" class="fill btn btn-default">記録</a></td><td class="col-xs-4"><a href="config.html" class="fill btn btn-default">監視枠</a></td><td class="col-xs-4"><div class="fill active btn btn-default">詳細設定</div></td>        </tr>
+      </table>
+    </div>
+    <div id="message-pane"></div><div id="site-select-pane" class="container">
+  <div class="form-group">
+    <label for="site-select" class="col-xs-12">サイトの選択</label>
+    <table class="site-select-table">
+        <tr>
+            <td>
+                <select id="site-select" class="form-control"></select>
+            </td>
+            <td>
+              <span id="site-duplicate-button"
+                    class="btn btn-info">
+                新規サイト設定
+              </span>
+            </td>
+        </tr>
+    </table>
+  </div>
+</div>
+<div id="detail-pane">
+  <ul>
+    <li id="tab-site">サイト属性</li>
+    <li id="tab-thermo">カメラ温度</li>
+  </ul>
+  <div id="config-site" class="tab-pane container">
+      <!-- サイト属性form -->
+<form action="javascript:void(0)" id="form-siteform">
+  <div class="form-horizontal">
+    <input type="hidden" name="DirName" value="" />
+    <div class="siteform-group"><label class="col-sm-2 control-label">サイト名</label><div class="col-sm-10"><div class="input-group"><input type="text" name="SiteName" required class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group"><label class="col-sm-2 control-label">CSV出力</label><div class="col-sm-4"><label class="radio-inline"><input type="radio" name="CsvOutput" value="1" />ON</label><label class="radio-inline"><input type="radio" name="CsvOutput" value="0" />OFF</label></div></div><div class="siteform-group"><label class="col-sm-2 control-label">エラー画像出力</label><div class="col-sm-4"><label class="radio-inline"><input type="radio" name="ImageOutput" value="1" />ON</label><label class="radio-inline"><input type="radio" name="ImageOutput" value="0" />OFF</label></div></div><div class="siteform-group"><label class="col-sm-2 control-label">アラーム音</label><div class="col-sm-4"><label class="radio-inline"><input type="radio" name="AlermSound" value="1" />ON</label><label class="radio-inline"><input type="radio" name="AlermSound" value="0" />OFF</label></div></div><div class="siteform-group"><label class="col-sm-2 control-label">cofファイル</label><div class="col-sm-4"><select class="form-control" id="select-CofFile" required name="CofFile"></select></div></div><div class="siteform-group"><label class="col-sm-2 control-label">閾値判定変数</label><div class="col-sm-4"><select class="form-control" id="select-ThresholdSet" required name="ThresholdSet"></select></div></div><div class="siteform-group"><label class="col-sm-2 control-label">色温度マップ</label><div class="col-sm-4"><select class="form-control" id="select-ColorMap" required name="ColorMap"></select></div></div><div class="siteform-group"><label class="col-sm-2 control-label">接合者名</label><div class="col-sm-4"><div class="input-group"><input type="text" name="SitePerson" class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group"><label class="col-sm-2 control-label">シートタイプ</label><div class="col-sm-4"><div class="input-group"><input type="text" name="SheetType" class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group"><label class="col-sm-2 control-label">接合温度</label><div class="col-sm-4"><div class="input-group"><input type="text" name="FusionTemp" class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group"><label class="col-sm-2 control-label">接合速度</label><div class="col-sm-4"><div class="input-group"><input type="text" name="FusionSpeed" class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group clearfix"><label class="col-sm-2 control-label">圧力</label><div class="col-sm-4"><div class="input-group"><input type="text" name="FusionPressure" class="form-control" maxlength="100"><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div><div class="siteform-group"><label class="col-sm-2 control-label">メモ</label><div class="col-sm-10"><div class="input-group"><textarea name="Memo" rows="3" class="form-control custom-control"></textarea><span class="input-group-addon btn btn-default"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span></span></div></div></div>  </div>
+</form>  </div>
+  <div id="config-temp" class="tab-pane container">
+    <form class="form-horizontal" action="javascript:void(0)" id="signaltemp-form">
+  <div id="info3" class="signaltemp-info alert alert-info">測定点の温度を入力して「設定完了」してください。</div>
+  <div id="info4" class="signaltemp-info alert alert-success">設定完了しました。</div>
+
+  <fieldset id="monitor1" class="col-sm-6 monitor" >
+    <div class="form-group">
+      <label class="control-label col-xs-4">設定点1</label>
+      <div class="col-xs-2">
+        <div id="color-monitor1" class="form-control color-monitor"></div>
+      </div>
+      <div class="col-xs-4">
+        <input type="hidden" name="signal1" />
+        <div class="input-group">
+          <input type="number" step="0.01" name="temp1" class="form-control" required />
+          <div class="input-group-addon">℃</div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <fieldset id="monitor2" class="col-sm-6 monitor">
+    <div class="form-group">
+      <label class="control-label col-xs-4">設定点2</label>
+      <div class="col-xs-2">
+        <div id="color-monitor2" class="form-control color-monitor"></div>
+      </div>
+      <div class="col-xs-4">
+        <input type="hidden" name="signal2" />
+        <div class="input-group">
+          <input type="number" step="0.01" name="temp2" class="form-control" required />
+          <div class="input-group-addon">℃</div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+<div class="form-group">
+  <div class="col-xs-5 col-xs-offset-1">
+    <button type="button" class="btn btn-info pull-left" id="color-startbutton">設定開始</button>
+    <button type="button" class="btn btn-warning pull-left" id="color-abortbutton">中断</button>
+  </div>
+  <div class="col-xs-5">
+    <button type="submit" disabled class="btn btn-primary pull-right" id="color-submitbutton">設定完了</button>
+  </div>
+</div>
+</form>
+<div id="info-pane">
+  <div id="info1" class="signaltemp-info alert alert-info">1つ目の測定点をクリックしてください。</div>
+  <div id="info2" class="signaltemp-info alert alert-info">2つ目の測定点をクリックしてください。</div>
+</div>  </div>
+</div>
+      <div id="image-pane">
+        <div class="viewer">
+          <img src="/img/viewer-noimage.gif" alt="" width="320" height="240" id="thermo-image" />
+          <div id="watchbox-main">
+            <div id="watchbox1-1" class="watchbox main"></div>
+            <div id="watchbox1-2" class="watchbox main"></div>
+          </div>
+          <div id="watchbox-sub">
+            <div id="watchbox2" class="watchbox sub"></div>
+          </div>
+        </div>
+        <div class="colormap">
+          <img src="/img/colormap-noimage.gif" alt="" width="320" height="40" id="colormap-image" />
+        </div>
+      </div><div class="restart-pane">
+  <button type="button" class="btn btn-warning btn-lg" id="restart-button">
+      <span class="glyphicon glyphicon-refresh"></span>
+      再起動
+  </button>
+  <div class="message">カメラに異常が発生した場合など、アプリケーションを再起動します。</div>
+</div>
+<div class="shutdown-pane">
+  <button type="button" class="btn btn-danger btn-lg"
+          id="shutdown-button">
+    <span class="glyphicon glyphicon-off"></span>
+    シャットダウン
+  </button>
+  <div class="message">注意！融着機側のPCをシャットダウンします。</div>
+</div>
+  </body>
+</html>

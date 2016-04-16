@@ -1,0 +1,16 @@
+@charset "utf-8";
+@import "_global.scss";
+@import "_common_viewer.scss";
+@import "_common_table.scss";
+@import "_common_bootstrap_mod.scss";
+@import "_common_page_layout.scss";
+@import "_common_tabstrip.scss";
+
+
+.center {
+    text-align: center;
+}
+
+.fill {
+    width: 100%;
+}

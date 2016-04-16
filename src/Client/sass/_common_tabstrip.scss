@@ -1,0 +1,48 @@
+@charset "utf-8";
+@import "_global.scss";
+
+// 独自のタブのデザイン
+.g-tabstrip-box {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 8px 0;
+    padding: 0 10px;
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+}
+.g-tabstrip-line {
+    margin-top: -4px;
+    border-top: 4px solid $selectedBg;
+    clear:both;
+    z-index: 10;
+}
+.g-tabstrip-row {
+    display: table-row;
+}
+.g-tabstrip-tab {
+    display: table-cell;
+    word-break: break-all;
+    border: 1px solid $mainBorderColor;
+    border-bottom: 0 none;
+    border-radius: 3px 3px 0 0;
+    padding: 12px;
+    color: $linkFg;
+    cursor: pointer;
+    &.disabled {
+        color: #c0c0c0 !important;
+        cursor: default;
+        text-decoration: none !important;
+    }
+    &.selected {
+        border: 0 none;
+        padding: 13px 13px 12px 13px;
+        background-color: $selectedBg;
+        color: $selectedFg;
+        cursor: default;
+    }
+    &:not(.selected):hover {
+        text-decoration: underline;
+        color: $linkHoverFg;
+    }
+}

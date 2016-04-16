@@ -1,0 +1,32 @@
+@charset "utf-8";
+@import "_global.scss";
+
+// サイト編集フォームのスタイル
+.siteform-group {
+    @media(min-width: 768px) {
+        select.form-control, .control-label, .radio-inline, .input-group {
+            margin-top: 8px !important;
+            margin-bottom: 8px !important;
+        }
+    }
+    @media(max-width: 768px) {
+        .control-label {
+            margin-top: 8px !important;
+            margin-bottom: 2px;
+        }
+        select.form-control, .radio-inline, .input-group {
+            margin-bottom: 8px !important;
+            margin-top: 0;
+        }
+        .radio-inline {
+            padding-top: 0;
+        }
+    }
+    .input-group {
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+    }
+}

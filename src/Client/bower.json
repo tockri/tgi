@@ -1,0 +1,21 @@
+{
+  "name": "tgi2",
+  "version": "0.0.1",
+  "authors": [
+    "fujita"
+  ],
+  "description": "TGI2",
+  "moduleType": [
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2"
+  }
+}

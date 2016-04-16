@@ -1,0 +1,53 @@
+@charset "utf-8";
+@import "_global.scss";
+body {
+    padding-bottom: 50px !important;
+}
+
+// ヘッダ
+div.heading {
+    background: #f0f0f0;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    table.heading {
+        width: 100%;
+        h1 {
+            margin: 0;
+            padding: 8px 0 0 0;
+            font-size: 12pt;
+            text-align: center;
+        }
+        td {
+            vertical-align: center;
+            padding: 10px 0 !important;
+        }
+        .btn {
+            border-radius: 0 !important;
+        }
+    }
+}
+
+// 設定画面のレイアウト
+.config-form {
+    max-width: 800px;
+    h2 {
+        background-color: #c0c0c0;
+        font-size: 12pt;
+        padding: 4px 10px;
+        border-bottom: 1px solid gray;
+    }
+}
+
+// Watchboxの変形操作パネル
+.watchbox-controller, .watchbox-configs {
+    max-width: 768px;
+    padding: 15px;
+    margin: 0 auto;
+    >.row {
+        margin: 10pt 0;
+        label.control-label {
+            padding-top: 5px;
+            text-align: right;
+        }
+    }
+}

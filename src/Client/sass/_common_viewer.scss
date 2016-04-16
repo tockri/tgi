@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+// Viewerに関するスタイル
+
+#image-pane {
+    margin: 10px auto;
+    text-align: center;
+}
+@media screen and (max-width: 768px) { 
+    #image-pane {
+        margin: 10px 0;
+    } 
+}
+.viewer {
+    display: inline-block;
+    position: relative;
+    height: 240px;
+    width: 320px;
+    .watchbox {
+        position: absolute;
+        border: 2px solid red;
+        display: none;
+        &.main {
+            border-color: #ff33ff;
+            
+        }
+        &.sub {
+            border-color: green;
+        }
+    }
+}
+.colormap {
+    margin-top: 1px;
+}
+
