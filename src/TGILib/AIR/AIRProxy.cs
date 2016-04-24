@@ -111,11 +111,6 @@ namespace TGILib.AIR {
         /// ステータスが変更されたときのイベント
         /// </summary>
         public event StateChangeHandler OnStateChanged;
-        protected void FireStateChanged(ProxyState newState) {
-            if (OnStateChanged != null) {
-                OnStateChanged(newState);
-            }
-        }
 
         /// <summary>
         /// エラー処理

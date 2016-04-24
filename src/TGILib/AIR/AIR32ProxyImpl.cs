@@ -34,7 +34,9 @@ namespace TGILib.AIR {
         /// <summary>
         /// cofファイル保存ディレクトリ
         /// </summary>
-        private const string COF_DIR = @"C:\Vcam2\Install\";
+        private const string AIR5_DIR = @"C:\Vcam2\Install\";
+
+        private const string AIR5_DLL = AIR5_DIR + "AIR5.dll";
 
         // ------------------------------------ DLL extern ----------------------------------------------
 
@@ -45,25 +47,25 @@ namespace TGILib.AIR {
         /// <param name="buf"></param>
         /// <param name="count"></param>
         /// <param name="status"></param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static unsafe extern void USB2_xfer2(byte* endpoint, byte* buf, long* count, byte* status);
         /// <summary>
         /// 初期化メソッドその０
         /// </summary>
         /// <param name="tbl">CVCamCalTbl</param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static extern void USB2_VCamCalTbl(IntPtr tbl);
         /// <summary>
         /// 初期化メソッドその１
         /// </summary>
         /// <param name="status"></param>
         /// <param name="fileName"></param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static extern void USB2_fpgaload(IntPtr status, IntPtr fileName);
         /// <summary>
         /// 初期化メソッドその２
         /// </summary>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static extern void USB2_Initfpa();
         /// <summary>
         /// 初期化メソッドその３
@@ -91,7 +93,7 @@ namespace TGILib.AIR {
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="status"></param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static extern void USB2_UploadCof(IntPtr filename, IntPtr status);
         /// <summary>
         /// correctの画像を取得する
@@ -99,14 +101,14 @@ namespace TGILib.AIR {
         /// <param name="buf"></param>
         /// <param name="count"></param>
         /// <param name="status"></param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static unsafe extern void USB2_GetImage(ushort* buf, long* count, byte* status);
 
         /// <summary>
         /// Syncronize ?
         /// </summary>
         /// <param name="status"></param>
-        [DllImport(@"C:\Vcam2\Install\AIR5.dll", SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AIR5_DLL, SetLastError = true, CallingConvention = CallingConvention.Cdecl)]
         private static extern void USB2_SyncOn(IntPtr status);
         /// <summary>
         /// AIRから取得したシグナル配列
@@ -132,6 +134,18 @@ namespace TGILib.AIR {
         /// ロックオブジェクト
         /// </summary>
         private object Lock = DateTime.Now.ToString();
+
+        private AIR32ProxyImpl singleton;
+
+        /// <summary>
+        /// コンストラクタは１回しか呼ばれてはいけない
+        /// </summary>
+        public AIR32ProxyImpl() {
+            if (singleton != null) {
+                throw new Exception("Constructor called twice.");
+            }
+            singleton = this;
+        }
 
         /// <summary>
         /// cofファイルを読み込む
@@ -198,7 +212,7 @@ namespace TGILib.AIR {
                 if (CofFilePath == null) {
                     // DeviceIDの最後の部分からcofファイルのファイル名を得る
                     // 例：USB\VID_167C&PID_0032\201500
-                    CofFilePath = Path.Combine(COF_DIR, Path.GetFileNameWithoutExtension(dev.DeviceID) + ".cof");
+                    CofFilePath = Path.Combine(AIR5_DIR, Path.GetFileNameWithoutExtension(dev.DeviceID) + ".cof");
                 }
                 if (State == ProxyState.NotConnected) {
                     // 未接続→接続に変化したとき
@@ -231,7 +245,7 @@ namespace TGILib.AIR {
                 State = ProxyState.Initializing;
                 lock (Lock) {
                     IntPtr pStatus = Marshal.AllocCoTaskMem(1);     // unsigned char*
-                    IntPtr pFilename = Marshal.StringToHGlobalAnsi(COF_DIR);
+                    IntPtr pFilename = Marshal.StringToHGlobalAnsi(AIR5_DIR);
                     try {
                         // メモリ領域を確保する
                         Marshal.FreeHGlobal(pVCamCalTbl);

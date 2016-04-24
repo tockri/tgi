@@ -11,7 +11,7 @@ namespace TGIApp {
         /// </summary>
         [STAThread]
         static void Main() {
-            
+            SAT.Util.SimpleDIContainer.Instance.Bind(typeof(AIRProxy), typeof(AIR32ProxyImpl));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

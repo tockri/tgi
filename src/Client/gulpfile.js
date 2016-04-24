@@ -25,15 +25,20 @@ var webpackConfig = {
     }
 };
 // HTTPサーバ 3000ポートで待ち受ける
-gulp.task("server", function() {
+// クライアントのみ開発用
+gulp.task("localserver", function() {
     browser({
-       // サービス側開発用
-       proxy: 'dev.xp' // サービス側を開発するときはWindows VMのサービスを使う
        
-       // クライアントのみ開発用
-       //server: {baseDir: './www/'} // クライアント側の開発だけするときはこちら
+       server: {baseDir: './www/'} // クライアント側の開発だけするときはこちら
     });
 });
+// アプリ側開発用
+gulp.task("server", function() {
+	browser({
+		proxy: 'localhost'
+	});
+});
+
 // Sassのコンパイル
 gulp.task("sass", function() {
     gulp.src('./sass/**/*.scss')

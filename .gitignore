@@ -237,3 +237,5 @@ _Pvt_Extensions
 src/TGI2Test/data/sites/20*
 src/data/log/log_*
 src/TGI2Test/data/log/log*
+/src/Client/nbproject/private/
+src/Client/bower_components/
