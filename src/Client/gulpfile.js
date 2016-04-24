@@ -4,7 +4,7 @@ var autoprefixer = require("gulp-autoprefixer");
 var uglify = require("gulp-uglify");
 var browser = require("browser-sync");
 var plumber = require('gulp-plumber');
-var webpack = require('gulp-webpack');
+var webpack = require('webpack-stream');
 var shell = require('gulp-shell');
 var wait = require('gulp-wait');
 var sourcemaps = require('gulp-sourcemaps');
@@ -28,15 +28,14 @@ var webpackConfig = {
 // クライアントのみ開発用
 gulp.task("localserver", function() {
     browser({
-       
        server: {baseDir: './www/'} // クライアント側の開発だけするときはこちら
     });
 });
 // アプリ側開発用
 gulp.task("server", function() {
-	browser({
-		proxy: 'localhost'
-	});
+    browser({
+        proxy: 'localhost'
+    });
 });
 
 // Sassのコンパイル
@@ -59,7 +58,7 @@ gulp.task("js", function() {
         .pipe(plumber())
         .pipe(webpack(webpackConfig))
         .pipe(uglify(webpackConfig.entry, {
-            outSourceMap: true
+            outSourceMap: false
         }))
         .pipe(gulp.dest('./www/js'))
         .pipe(browser.reload({stream: true}));
@@ -100,8 +99,19 @@ gulp.task("php", function() {
 
 
 // ファイルの変更監視
-gulp.task('default', ['copy', 'js', 'sass', 'php', 'server'], function() {
+gulp.task('dev', ['copy', 'js', 'sass', 'php', 'server'], function() {
     gulp.watch(["./js/**/*.js"], ["js"]);
     gulp.watch(["./sass/**/*.scss"], ["sass"]);
     gulp.watch(["./php/**/*.php"], ['php']);
+});
+
+// localserverを使ったCSSなどの開発
+gulp.task('local', ['copy', 'js', 'sass', 'php', 'localserver'], function() {
+    gulp.watch(["./js/**/*.js"], ["js"]);
+    gulp.watch(["./sass/**/*.scss"], ["sass"]);
+    gulp.watch(["./php/**/*.php"], ['php']);
+});
+
+gulp.task('default', function() {
+    console.log('dev or local');
 });

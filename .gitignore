@@ -239,3 +239,4 @@ src/data/log/log_*
 src/TGI2Test/data/log/log*
 /src/Client/nbproject/private/
 src/Client/bower_components/
+src/TGI2Test/data/sites/default/image/
