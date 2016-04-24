@@ -240,3 +240,4 @@ src/TGI2Test/data/log/log*
 /src/Client/nbproject/private/
 src/Client/bower_components/
 src/TGI2Test/data/sites/default/image/
+src/TGI2Test/data/sites/default/CSV/

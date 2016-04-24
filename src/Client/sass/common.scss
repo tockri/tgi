@@ -14,3 +14,19 @@
 .fill {
     width: 100%;
 }
+
+.membrane {
+    display: none;
+}
+body.refused {
+    .membrane {
+        position: fixed;
+        display: block;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(80, 80, 80, 0.1);
+    }
+}

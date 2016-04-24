@@ -22,30 +22,40 @@ var socket = null;
  * @type Number
  */
 var connectErrorCount = 0;
+/**
+ * リトライ最大回数
+ * @type Number
+ */
+var RETRY_MAX_COUNT = 5;
 
 /**
  * WebSocketメッセージ受信イベント
  * @param {object} evt
  */
 function onSocketMessage(evt) {
-    connectErrorCount = 0;
     var data = evt.data;
     if (data.constructor === String) {
         var m = data.match(/^([^\t]+)\t([\s\S]+)/);
         if (m) {
-            //Logger.log(m, 'Socket Message');
+            // Logger.log(m, 'Socket Message');
             var comm = m[1];
+            if (comm == 'ConnectionRefused') {
+                connectErrorCount = RETRY_MAX_COUNT;
+            } else {
+                connectErrorCount = 0;
+            }
             if (listeners[comm]) {
-                var data = $.parseJSON(m[2]);
+                var parsed = $.parseJSON(m[2]);
                 //Logger.log(data, 'parsed object');
                 $.each(listeners[comm], function (i, l) {
-                    l(data);
+                    l(parsed);
                 });
             }
         } else {
             Logger.log('unknown :' + data);
         }
     } else if (data.constructor === Blob) {
+        connectErrorCount = 0;
         if (listeners['blob']) {
             $.each(listeners.blob, function (i, l) {
                 l(data);
@@ -67,7 +77,7 @@ function startWebSocket() {
             socket.addEventListener('close', function() {
                 socket = null;
                 Logger.log(socket, "socket closed!");
-                if (++connectErrorCount < 5) {
+                if (++connectErrorCount < RETRY_MAX_COUNT) {
                     setTimeout(startWebSocket, 500);
                 } else {
                     onSocketMessage({
@@ -114,6 +124,9 @@ var Sender = {
      * }
      */
     send: function (command, opts) {
+        if (!socket) {
+            return;
+        }
         opts = opts || {};
         $.ajax({
             url: API_ROOT + command,

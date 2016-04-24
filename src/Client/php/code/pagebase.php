@@ -67,6 +67,7 @@ END;
         </tr>
       </table>
     </div>
+    <div class="membrane"></div>
     <div id="message-pane"></div>
 END;
 }

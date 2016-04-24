@@ -9,7 +9,7 @@ var changeListeners = [];
  * ステータスのインターフェイス
  * 
  * ステータスオブジェクトの仕様は
- * AIRStatus: NotConnected|NotInitialized|Initializing|Initialized
+ * AIRStatus: NotConnected|NotInitialized|Initializing|Initialized|ErrorMessage
  * Recording: true|false
  * SiteDirName: 現在のサイトディレクトリ名
  */

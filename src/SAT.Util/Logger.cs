@@ -3,6 +3,7 @@ using System.Collections;
 using System.Text;
 using System.IO;
 using System.Data.Common;
+using System.Diagnostics;
 
 namespace SAT.Util {
     /// <summary>
@@ -212,6 +213,7 @@ namespace SAT.Util {
                 }
                 if (Output == LogOutput.FILE) {
                     lock (Lock) {
+                        Debug.WriteLine(sw.ToString());
                         using (StreamWriter file = new StreamWriter(logDir + "/log_" + todayStr + ".txt", true)) {
                             file.Write(sw.ToString());
                         }

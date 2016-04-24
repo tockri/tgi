@@ -43,6 +43,14 @@ namespace TGILib {
             }
         }
         /// <summary>
+        /// セッション数の上限
+        /// </summary>
+        public static int MaxSessionCount {
+            get {
+                return Properties.GetInt("MaxSessionCount", 3);
+            }
+        }
+        /// <summary>
         /// HTTPサーバのドキュメントルート
         /// </summary>
         public static string HttpDocRoot {

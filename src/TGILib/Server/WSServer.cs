@@ -29,13 +29,28 @@ namespace TGILib.Server {
             Port = port;
         }
         /// <summary>
+        /// セッション接続リクエスト
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="requestInfo"></param>
+        private void Server_NewRequestReceived(WebSocketSession session, SuperWebSocket.Protocol.IWebSocketFragment requestInfo) {
+            Logger.debug("New Request");
+        }
+
+
+        /// <summary>
         /// セッション接続時のイベントリスナ
         /// </summary>
         /// <param name="session"></param>
         void Server_NewSessionConnected(WebSocketSession session) {
-//            Debug.WriteLine(session.RemoteEndPoint, "Connected");
-            Logger.debug(session.RemoteEndPoint, "Session connected");
-            Sessions.Add(session);
+            if (Sessions.Count >= AppConfig.MaxSessionCount) {
+                Logger.debug("already full");
+                session.Send("ConnectionRefused\t\"接続数の上限に達しているため接続できません。\"");
+                session.Close(CloseReason.SocketError);
+            } else {
+                Logger.debug(session.RemoteEndPoint, "Session connected");
+                Sessions.Add(session);
+            }
         }
         /// <summary>
         /// セッション切断時のイベントリスナ
@@ -59,9 +74,9 @@ namespace TGILib.Server {
         /// </summary>
         public void Start() {
             Server = new WebSocketServer();
-            Server.SessionClosed += new SessionHandler<WebSocketSession, CloseReason>(Server_SessionClosed);
-            Server.NewSessionConnected += new SessionHandler<WebSocketSession>(Server_NewSessionConnected);
-            Server.NewMessageReceived += new SessionHandler<WebSocketSession, string>(Server_NewMessageReceived);
+            Server.NewSessionConnected += Server_NewSessionConnected;
+            Server.NewMessageReceived += Server_NewMessageReceived;
+            Server.SessionClosed += Server_SessionClosed;
             var rootConfig = new RootConfig();
             var serverConfig = new ServerConfig() {
                 Port = Port,
@@ -77,6 +92,7 @@ namespace TGILib.Server {
                 Logger.error("WebSocket Server failed to start");
             }
         }
+
         /// <summary>
         /// サーバー停止
         /// </summary>
