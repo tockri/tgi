@@ -155,11 +155,12 @@ namespace TGILib {
         /// <summary>
         /// ファイルストリームを開き直す
         /// </summary>
-        public void ReopenFile() {
+        private void ReopenFile() {
             if (Enabled && OutputEnabled) {
                 try {
                     CloseFile();
                     csvout = Open("main");
+
                 } catch (IOException ioe) {
                     OutputEnabled = false;
                     TGIApp.Instance.FireClientEvent(TGIApp.ClientEventType.ErrorMessage, 
@@ -178,6 +179,7 @@ namespace TGILib {
                 suffix++;
             }
             TextWriter fout = new StreamWriter(fileBaseName + "-" + suffix.ToString("d3") + ".csv", false, System.Text.Encoding.Default);
+            WriteCurrentConfig(fout);
             StringBuilder sb = new StringBuilder();
             sb.Append("時刻,接合部温度,閾値温度,環境温度,エラー,ALL-MAX,ALL-MIN");
             for (int i = 0; i < MainBox.CellCount; i++) {
@@ -185,18 +187,50 @@ namespace TGILib {
                 sb.Append(",Cell" + i + "-MIN");
                 sb.Append(",Cell" + i + "-AVG");
             }
-
             fout.WriteLine(sb.ToString());
             return fout;
         }
+
+        /// <summary>
+        /// 現在の設定値をCSVに書き出す
+        /// </summary>
+        private void WriteCurrentConfig(TextWriter fout) {
+            var conf = TGIApp.Instance.CurrentConfig;
+            var sb = new StringBuilder();
+            WritePair(sb, "サイト名", conf.SiteName);
+            WritePair(sb, "接合者名", conf.SitePerson);
+            WritePair(sb, "cofファイル名", Path.GetFileName(conf.CofFilePath));
+            WritePair(sb, "閾値判定変数", "(傾き=" + conf.ThresholdSlope + "/切片=" + conf.ThresholdIntercept + ")");
+            WritePair(sb, "シートタイプ", conf.SheetType);
+            WritePair(sb, "接合温度", conf.FusionTemp);
+            WritePair(sb, "接合速度", conf.FusionSpeed);
+            WritePair(sb, "圧力", conf.FusionPressure);
+            WritePair(sb, "メモ", conf.Memo, false);
+            fout.WriteLine(sb.ToString());
+        }
+
+        
+
+        /// <summary>
+        /// エスケープしてクオートで囲む
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private void WritePair(StringBuilder sb, string name, string value, bool addComma = true) {
+            sb.Append("\"").Append(name).Append(":\",\"").Append(value.Replace("\"", "\"\"")).Append("\"");
+            if (addComma) {
+                sb.Append(",");
+            }
+        }
+
+
         /// <summary>
         /// CSVを一行出力する
         /// </summary>
-        /// <param name="fout">出力先</param>
         /// <param name="cells">セル</param>
         /// <param name="now">現在時刻</param>
         /// <param name="safe">判定OK</param>
-        private void Output(TextWriter fout, WatchCell[] cells, DateTime now, bool safe) {
+        private void Output(WatchCell[] cells, DateTime now, bool safe) {
             StringBuilder sb = new StringBuilder();
             TimeSpan ts = now - startTime;
             sb.Append("" + now.ToString("yyyy-MM-dd HH:mm:ss.f"));
@@ -212,7 +246,7 @@ namespace TGILib {
                 sb.Append("," + (int)Math.Round(cell.Average));
             }
             try {
-                fout.WriteLine(sb.ToString());
+                csvout.WriteLine(sb.ToString());
                 lastWrite = now;
                 if (!safe) {
                     lastErrorWrite = now;
@@ -246,7 +280,7 @@ namespace TGILib {
                     if (csvout == null) {
                         ReopenFile();
                     }
-                    Output(csvout, cells, now, safe);
+                    Output(cells, now, safe);
                 }
             }
             if (!safe) {

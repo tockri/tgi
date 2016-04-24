@@ -39,7 +39,7 @@ var Message = {
      * @param {bool} withAlerm true指定すると音つき
      */
     alert: function (message, duration, withAlerm) {
-        //$('#message-pane .alert.alert-danger').remove();
+        $('#message-pane .alert.alert-danger').remove();
         if (alertTimer) {
             clearTimeout(alertTimer);
         }
@@ -146,7 +146,7 @@ Sender.onMessage('TempWarn', function(msg) {
     Message.alert(msg, 5000, false);
 });
 Sender.onMessage('ConnectionRefused', function(msg) {
-    Message.alert(msg);
+    Message.show(msg);
     $('body').addClass('refused');
     $('a,button').prop('disabled', true);
     $('a').attr('href', '#');
