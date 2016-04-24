@@ -234,3 +234,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+src/TGI2Test/data/sites/20*
+src/data/log/log_*
+src/TGI2Test/data/log/log*

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TGITest {
+namespace TGIApp {
     public partial class Viewer : UserControl {
         private bool PaintBg = true;
 

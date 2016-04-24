@@ -105,6 +105,8 @@
   <ItemGroup>
     <Compile Include="AIR\AIRException.cs" />
     <Compile Include="AIR\AIRProxy.cs" />
+    <Compile Include="AIR\AIR32ProxyImpl.cs" />
+    <Compile Include="AIR\AIRProxyMock.cs" />
     <Compile Include="AIR\AIRSupport.cs" />
     <Compile Include="AppConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

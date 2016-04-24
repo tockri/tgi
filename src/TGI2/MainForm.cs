@@ -12,7 +12,7 @@ using TGILib.AIR;
 using SAT.Util;
 using System.Diagnostics;
 
-namespace TGITest {
+namespace TGIApp {
     public partial class MainForm : Form {
         private enum WM : uint {
             WM_DEVICECHANGE = 0x0219,
@@ -20,7 +20,7 @@ namespace TGITest {
         private Bitmap bmp = new Bitmap(AIRProxy.ImageWidth, AIRProxy.ImageHeight);
         private Bitmap mapBmp;
 
-        private TGIApp app = TGIApp.Instance;
+        private TGILib.TGIApp app = TGILib.TGIApp.Instance;
 
         public MainForm() {
             InitializeComponent();

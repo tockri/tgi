@@ -1,4 +1,4 @@
-﻿namespace TGITest {
+﻿namespace TGIApp {
     partial class Viewer {
         /// <summary> 
         /// 必要なデザイナー変数です。

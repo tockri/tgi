@@ -1,4 +1,4 @@
-﻿namespace TGITest {
+﻿namespace TGIApp {
     partial class MainForm {
         /// <summary>
         /// 必要なデザイナ変数です。
