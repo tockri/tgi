@@ -179,7 +179,6 @@ namespace TGILib {
                 suffix++;
             }
             TextWriter fout = new StreamWriter(fileBaseName + "-" + suffix.ToString("d3") + ".csv", false, System.Text.Encoding.Default);
-            WriteCurrentConfig(fout);
             StringBuilder sb = new StringBuilder();
             sb.Append("時刻,接合部温度,閾値温度,環境温度,エラー,ALL-MAX,ALL-MIN");
             for (int i = 0; i < MainBox.CellCount; i++) {
@@ -187,6 +186,8 @@ namespace TGILib {
                 sb.Append(",Cell" + i + "-MIN");
                 sb.Append(",Cell" + i + "-AVG");
             }
+            sb.Append(",");
+            WriteCurrentConfig(sb);
             fout.WriteLine(sb.ToString());
             return fout;
         }
@@ -194,9 +195,8 @@ namespace TGILib {
         /// <summary>
         /// 現在の設定値をCSVに書き出す
         /// </summary>
-        private void WriteCurrentConfig(TextWriter fout) {
+        private void WriteCurrentConfig(StringBuilder sb) {
             var conf = TGIApp.Instance.CurrentConfig;
-            var sb = new StringBuilder();
             WritePair(sb, "サイト名", conf.SiteName);
             WritePair(sb, "接合者名", conf.SitePerson);
             WritePair(sb, "cofファイル名", Path.GetFileName(conf.CofFilePath));
@@ -206,7 +206,6 @@ namespace TGILib {
             WritePair(sb, "接合速度", conf.FusionSpeed);
             WritePair(sb, "圧力", conf.FusionPressure);
             WritePair(sb, "メモ", conf.Memo, false);
-            fout.WriteLine(sb.ToString());
         }
 
         
