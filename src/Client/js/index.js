@@ -57,5 +57,5 @@ $(function() {
     Status.get(onStatusChange);
     Status.onChange(onStatusChange);
     initButtons();
-    
+//    window.Message = Message;
 });

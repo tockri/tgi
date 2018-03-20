@@ -19,6 +19,6 @@ viewer();
 <audio id="alerm-sound">
     <source src="sound/alerm3.mp3" type="audio/mpeg" />
 </audio>
-
+<?php // <button type="button" onclick="Message.initSound();Message.alert('test', 5000, true);">Test Alert</button> ?>
 <?php
 bodyFoot();

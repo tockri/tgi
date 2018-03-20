@@ -61,12 +61,16 @@ var Message = {
             if (alerm.length) {
                 if (!alermPlaying) {
                     alermPlaying = true;
+                    alerm.on('ended', function() {
+                        if (alermPlaying) {
+                            this.play();
+                        }
+                    });
                     alerm[0].play();
                     Logger.log(alerm[0], "alerm play");
                     setTimeout(function () {
-                        alerm[0].pause();
-                        alermPlaying = false;
-                    }, 2000);
+                        Message.stopAlerm();
+                    }, duration || 10000);
                 }
             }
         }
