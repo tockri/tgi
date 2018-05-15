@@ -376,7 +376,7 @@ namespace TGILib {
             }
             avg /= (float)cells.Length;
             SubAverage = avg;
-            MinSafeTemp = avg * ThresholdSlope + ThresholdIntercept;
+            MinSafeTemp = Math.Log(avg) * ThresholdSlope + ThresholdIntercept;
         }
 
         /// <summary>

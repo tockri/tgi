@@ -24,6 +24,9 @@ function initButtons() {
             }
         });
     });
+    $('#alermtest').click(function() {
+        Message.alert('testing', 5000, true);
+    });
     
 }
 

@@ -15,6 +15,11 @@ viewer();
     <span class="glyphicon glyphicon-stop"></span>
     停止
   </button>
+  <?php /*
+  <button type="button" class="btn btn-danger btn-lg" id="alermtest">
+    <span class="glyphicon glyphicon-bell">Test Alert</span>
+  </button>
+  */ ?>
 </div>
 <audio id="alerm-sound">
     <source src="sound/alerm3.mp3" type="audio/mpeg" />
